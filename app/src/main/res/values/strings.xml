@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SimpleRedditClient</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="title_home">Home</string>
+</resources>
