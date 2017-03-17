@@ -1,18 +1,18 @@
-package com.ferjuarez.simpleredditclient;
+package com.ferjuarez.simpleredditclient.views;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import com.ferjuarez.simpleredditclient.R;
 import com.ferjuarez.simpleredditclient.models.RedditElement;
 import com.ferjuarez.simpleredditclient.networking.RedditService;
 import com.ferjuarez.simpleredditclient.networking.RetrofitManager;
 import com.ferjuarez.simpleredditclient.utils.ui.RedditPostAdapter;
-import com.ferjuarez.simpleredditclient.views.BaseCompatActivity;
-import com.ferjuarez.simpleredditclient.views.BaseView;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +30,8 @@ public class MainActivity extends BaseCompatActivity implements BaseView {
     RecyclerView mRecyclerView;
     @BindView(R.id.progressBar)
     ProgressBar mProgressBar;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     private LinearLayoutManager mLayoutManager;
     private boolean isLastPage = false;
@@ -98,7 +100,6 @@ public class MainActivity extends BaseCompatActivity implements BaseView {
 
     private void loadMoreItems() {
         mProgressBar.setVisibility(View.VISIBLE);
-        showWaitDialog(this, "Cargando");
         isLoading = true;
 
         mRedditSubscription = mRedditService.getPaginatedTop(PAGE_SIZE, mNextPage)
