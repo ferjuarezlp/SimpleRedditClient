@@ -13,7 +13,7 @@ import com.ferjuarez.simpleredditclient.R;
 import com.ferjuarez.simpleredditclient.models.RedditData;
 import com.ferjuarez.simpleredditclient.models.RedditElement;
 import com.ferjuarez.simpleredditclient.presenters.RedditPresenter;
-import com.ferjuarez.simpleredditclient.utils.ui.RedditPostAdapter;
+import com.ferjuarez.simpleredditclient.ui.RedditPostAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -161,7 +161,7 @@ public class MainActivity extends BaseCompatActivity implements BaseView {
     }
 
     private void loadMoreItems() {
-        showWaitDialog(this, getString(R.string.title_loading));
+        showWaitDialog(this, getString(R.string.title_loading_more));
         isLoading = true;
         mRedditPresenter.getPaginatedTops(mNextPage);
     }

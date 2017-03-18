@@ -1,8 +1,7 @@
-package com.ferjuarez.simpleredditclient.utils.ui;
+package com.ferjuarez.simpleredditclient.ui;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.View;

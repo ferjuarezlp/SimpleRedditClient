@@ -1,10 +1,9 @@
-package com.ferjuarez.simpleredditclient.utils.ui;
+package com.ferjuarez.simpleredditclient.ui;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,8 @@ import com.bumptech.glide.Glide;
 import com.ferjuarez.simpleredditclient.R;
 import com.ferjuarez.simpleredditclient.models.RedditElement;
 import com.ferjuarez.simpleredditclient.models.RedditPost;
+import com.ferjuarez.simpleredditclient.utils.Util;
+
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,6 +74,8 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RedditPostAdapter.Vi
         TextView textViewCommentsCount;
         @BindView(R.id.author)
         TextView author;
+        @BindView(R.id.textSubreddit)
+        TextView textSubreddit;
 
         private RedditPost redditPost;
 
@@ -91,8 +94,11 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RedditPostAdapter.Vi
             this.redditPost = redditPost;
             setImage(redditPost.getThumbnail());
             title.setText(redditPost.getTitle());
-            author.setText(redditPost.getAuthor());
-            textViewCommentsCount.setText(redditPost.getNumComments() + " Comments");
+            String time = Util.getTimeAgo(redditPost.getCreatedUtc());
+            String authorTime = mContext.getString(R.string.label_author_time, redditPost.getAuthor(), time);
+            author.setText(authorTime);
+            textViewCommentsCount.setText(redditPost.getNumComments() + mContext.getString(R.string.label_comments));
+            textSubreddit.setText(mContext.getString(R.string.label_posted) + redditPost.getSubreddit());
             thumbnail.setOnClickListener(view -> {
                 if(redditPost.getPreview() != null){
                     String url = redditPost.getThumbnail();

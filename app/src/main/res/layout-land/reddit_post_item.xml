@@ -27,7 +27,6 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingBottom="4dp"
             android:paddingRight="4dp"
             android:paddingLeft="4dp"
             android:orientation="vertical">
@@ -48,7 +47,7 @@
                 android:textSize="11sp"
                 android:gravity="right"
                 android:layout_above="@+id/textViewCommentsCount"
-                tools:text="Descripcion"/>
+                tools:text="Author"/>
 
             <TextView
                 android:id="@+id/textViewCommentsCount"
@@ -56,9 +55,22 @@
                 android:layout_height="wrap_content"
                 android:text="200 "
                 android:gravity="right"
+                android:layout_marginBottom="8dp"
+                android:layout_above="@+id/textSubreddit"
                 android:layout_alignParentBottom="true"
                 android:textColor="@color/colorAccent"
                 android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textSubreddit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="bottom|end"
+                android:textSize="10sp"
+                android:textColor="@color/colorAccentTransparent"
+                android:textStyle="bold"
+                tools:text="asasasa" />
 
         </RelativeLayout>
 

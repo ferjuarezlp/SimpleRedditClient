@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
-import com.ferjuarez.simpleredditclient.utils.ui.DialogClickCallback;
-import com.ferjuarez.simpleredditclient.utils.ui.SimpleDialog;
+import com.ferjuarez.simpleredditclient.ui.DialogClickCallback;
+import com.ferjuarez.simpleredditclient.ui.SimpleDialog;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 /**

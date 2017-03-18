@@ -1,4 +1,4 @@
-package com.ferjuarez.simpleredditclient.utils.ui;
+package com.ferjuarez.simpleredditclient.ui;
 
 /**
  * Created by ferjuarez on 3/15/17.

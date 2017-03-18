@@ -1,14 +1,7 @@
 package com.ferjuarez.simpleredditclient.presenters;
 
-import android.util.Log;
-import android.view.View;
-
-import com.ferjuarez.simpleredditclient.models.RedditElement;
 import com.ferjuarez.simpleredditclient.networking.RedditService;
 import com.ferjuarez.simpleredditclient.networking.RetrofitManager;
-import com.ferjuarez.simpleredditclient.utils.ui.RedditPostAdapter;
-
-import java.util.List;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

@@ -17,10 +17,10 @@ public class RedditPost implements Parcelable {
     private String title;
 
     @SerializedName("created")
-    private String created;
+    private long created;
 
     @SerializedName("created_utc")
-    private String createdUtc;
+    private long createdUtc;
 
     @SerializedName("num_comments")
     private int numComments;
@@ -44,8 +44,8 @@ public class RedditPost implements Parcelable {
     protected RedditPost(Parcel in) {
         author = in.readString();
         title = in.readString();
-        created = in.readString();
-        createdUtc = in.readString();
+        created = in.readLong();
+        createdUtc = in.readLong();
         numComments = in.readInt();
         url = in.readString();
         subreddit = in.readString();
@@ -57,8 +57,8 @@ public class RedditPost implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(author);
         dest.writeString(title);
-        dest.writeString(created);
-        dest.writeString(createdUtc);
+        dest.writeLong(created);
+        dest.writeLong(createdUtc);
         dest.writeInt(numComments);
         dest.writeString(url);
         dest.writeString(subreddit);
@@ -91,11 +91,11 @@ public class RedditPost implements Parcelable {
         return title;
     }
 
-    public String getCreated() {
+    public long getCreated() {
         return created;
     }
 
-    public String getCreatedUtc() {
+    public long getCreatedUtc() {
         return createdUtc;
     }
 

@@ -1,4 +1,4 @@
-package com.ferjuarez.simpleredditclient.utils.ui;
+package com.ferjuarez.simpleredditclient.ui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
