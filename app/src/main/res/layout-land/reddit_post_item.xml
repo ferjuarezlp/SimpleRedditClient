@@ -20,16 +20,13 @@
 
         <ImageView
             android:id="@+id/thumbnail"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_weight="0.6"
-            android:scaleType="fitXY"
-            android:background="@android:color/black"/>
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="0.4"
             android:paddingBottom="4dp"
             android:paddingRight="4dp"
             android:paddingLeft="4dp"
@@ -37,12 +34,12 @@
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
-                tools:text="Titulo demasiado largo para mostrarlo en el adapter asasasasasasasasasas"
-                android:layout_alignParentTop="true" />
+                tools:text="Titulo demasiado largo para mostrarlo en el adapter asasasasasasasasasas" />
 
             <TextView
                 android:id="@+id/author"

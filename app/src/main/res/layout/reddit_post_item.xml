@@ -20,11 +20,9 @@
 
         <ImageView
             android:id="@+id/thumbnail"
-            android:layout_width="250dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:scaleType="centerCrop"
-            android:background="@android:color/black"/>
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"

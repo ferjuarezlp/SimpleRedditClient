@@ -1,5 +1,8 @@
 package com.ferjuarez.simpleredditclient.utils.ui;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +24,7 @@ import butterknife.OnClick;
  */
 public class RedditPostAdapter extends RecyclerView.Adapter<RedditPostAdapter.ViewHolder> {
 
+    private Context mContext;
     private List<RedditElement> mRedditElements;
 
     public RedditPostAdapter(List<RedditElement> redditElements) {
@@ -31,11 +35,21 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RedditPostAdapter.Vi
         this.mRedditElements.addAll(redditElements);
     }
 
+    public List<RedditElement> getItems(){
+        return this.mRedditElements;
+    }
+
+    public void updateItems(List<RedditElement> items){
+        this.mRedditElements = items;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder viewHolder = new ViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.reddit_post_item, parent, false));
         viewHolder.setIsRecyclable(true);
+        mContext = parent.getContext();
         return viewHolder;
     }
 
@@ -79,10 +93,15 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RedditPostAdapter.Vi
             title.setText(redditPost.getTitle());
             author.setText(redditPost.getAuthor());
             textViewCommentsCount.setText(redditPost.getNumComments() + " Comments");
-            thumbnail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.e("","");
+            thumbnail.setOnClickListener(view -> {
+                if(redditPost.getPreview() != null){
+                    String url = redditPost.getThumbnail();
+                    if(redditPost.getPreview().getImages().size() > 0){
+                        url = redditPost.getPreview().getImages().get(0).getSource().getUrl().replace("&amp;","&");
+                    }
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    mContext.startActivity(i);
                 }
             });
         }
@@ -90,9 +109,9 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RedditPostAdapter.Vi
         private void setImage(String url) {
             Glide.with(thumbnail.getContext())
                     .load(url)
-                    .placeholder(android.R.color.black)
                     //.centerCrop()
                     .crossFade()
+                    .transform(new CircleTransform(thumbnail.getContext()))
                     .into(thumbnail);
         }
     }

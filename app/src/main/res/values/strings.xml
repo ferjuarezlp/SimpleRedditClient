@@ -2,4 +2,8 @@
     <string name="app_name">SimpleRedditClient</string>
     <string name="label_cancel">Cancel</string>
     <string name="title_home">Home</string>
+    <string name="title_empty">Sorry, but we don\'t have any post to show you!</string>
+    <string name="title_loading">Loading</string>
+    <string name="label_comments">Comments</string>
+
 </resources>
