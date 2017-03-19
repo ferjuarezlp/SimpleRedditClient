@@ -60,8 +60,6 @@ public class MainActivity extends BaseCompatActivity implements BaseView {
         super.onSaveInstanceState(state);
 
         mViewState = mLayoutManager.onSaveInstanceState();
-
-        //state.putParcelable(RECYCLER_KEY, mViewState);
         state.putString(NEXT_PAGE_KEY, mNextPage);
         state.putBoolean(IS_LOADING_KEY, isLoading);
         state.putBoolean(IS_LAST_PAGE_KEY, isLastPage);
@@ -73,14 +71,12 @@ public class MainActivity extends BaseCompatActivity implements BaseView {
         super.onRestoreInstanceState(state);
 
         if(state != null){
-            //mViewState = state.getParcelable(RECYCLER_KEY);
             mNextPage = state.getString(NEXT_PAGE_KEY);
             isLoading = state.getBoolean(IS_LOADING_KEY);
             isLastPage = state.getBoolean(IS_LAST_PAGE_KEY);
             List<RedditElement> items = state.getParcelableArrayList(ITEMS_KEY);
             mRecyclerView.setAdapter(new RedditPostAdapter(items));
             mRecyclerView.getAdapter().notifyDataSetChanged();
-            //
         }
 
     }
@@ -158,6 +154,9 @@ public class MainActivity extends BaseCompatActivity implements BaseView {
     @Override
     public void onConnectionError(Throwable error) {
         showInfoDialog(error.getMessage());
+        dismissWaitDialog();
+        progressBar.setVisibility(View.INVISIBLE);
+        textViewEmpty.setVisibility(View.VISIBLE);
     }
 
     private void loadMoreItems() {

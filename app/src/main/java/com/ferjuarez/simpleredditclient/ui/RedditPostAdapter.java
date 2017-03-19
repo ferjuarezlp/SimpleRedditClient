@@ -94,10 +94,9 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RedditPostAdapter.Vi
             this.redditPost = redditPost;
             setImage(redditPost.getThumbnail());
             title.setText(redditPost.getTitle());
-            String time = Util.getTimeAgo(redditPost.getCreatedUtc());
-            String authorTime = mContext.getString(R.string.label_author_time, redditPost.getAuthor(), time);
-            author.setText(authorTime);
-            textViewCommentsCount.setText(redditPost.getNumComments() + mContext.getString(R.string.label_comments));
+            String time = Util.getTimeAgo(redditPost.getCreatedUtc(), mContext);
+            author.setText(mContext.getString(R.string.label_author_time, redditPost.getAuthor(), time));
+            textViewCommentsCount.setText(mContext.getString(R.string.label_comments, redditPost.getNumComments()));
             textSubreddit.setText(mContext.getString(R.string.label_posted) + redditPost.getSubreddit());
             thumbnail.setOnClickListener(view -> {
                 if(redditPost.getPreview() != null){

@@ -1,11 +1,11 @@
 package com.ferjuarez.simpleredditclient.networking;
 
-import com.ferjuarez.simpleredditclient.networking.errors.RxErrorHandlingCallAdapterFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -40,7 +40,7 @@ public class RetrofitManager {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(httpClient.build())
                 .build();
     }

@@ -29,6 +29,7 @@
             android:layout_height="match_parent"
             android:paddingRight="4dp"
             android:paddingLeft="4dp"
+            android:layout_marginLeft="5dp"
             android:orientation="vertical">
 
             <TextView
@@ -37,27 +38,23 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
-                tools:text="Titulo demasiado largo para mostrarlo en el adapter asasasasasasasasasas" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="11sp"
-                android:gravity="right"
-                android:layout_above="@+id/textViewCommentsCount"
-                tools:text="Author"/>
+                android:gravity="left"
+                android:layout_above="@+id/textViewCommentsCount"/>
 
             <TextView
                 android:id="@+id/textViewCommentsCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="200 "
-                android:gravity="right"
+                android:gravity="left"
                 android:layout_marginBottom="8dp"
                 android:layout_above="@+id/textSubreddit"
-                android:layout_alignParentBottom="true"
                 android:textColor="@color/colorAccent"
                 android:textSize="20sp" />
 
@@ -69,8 +66,7 @@
                 android:gravity="bottom|end"
                 android:textSize="10sp"
                 android:textColor="@color/colorAccentTransparent"
-                android:textStyle="bold"
-                tools:text="asasasa" />
+                android:textStyle="bold" />
 
         </RelativeLayout>
 

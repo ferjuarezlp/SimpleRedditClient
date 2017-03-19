@@ -11,7 +11,7 @@ import rx.Observable;
 public interface RedditService {
 
     @GET("/top.json")
-    Observable<RedditRootElement> getTop();//@Header("Authorization") String token);
+    Observable<RedditRootElement> getTop();
 
     @GET("/top.json")
     Observable<RedditRootElement> getPaginatedTop(@Query("limit") int limit, @Query("after") String after);

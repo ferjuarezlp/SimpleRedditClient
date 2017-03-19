@@ -30,6 +30,7 @@
             android:paddingBottom="4dp"
             android:paddingRight="4dp"
             android:paddingLeft="4dp"
+            android:layout_marginLeft="5dp"
             android:orientation="vertical">
 
             <TextView
@@ -38,7 +39,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
-                tools:text="Titulo demasiado largo para mostrarlo en el adapter asasasasasasasasasas"
                 android:layout_alignParentTop="true" />
 
             <TextView
@@ -47,15 +47,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
                 android:layout_centerVertical="true"
-                android:textSize="11sp"
-                tools:text="Descripcion" />
+                android:textSize="11sp"/>
 
             <TextView
                 android:id="@+id/textViewCommentsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/author"
-                android:text="200 "
                 android:textColor="@color/colorAccent"
                 android:textSize="12sp" />
 

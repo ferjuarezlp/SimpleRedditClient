@@ -1,37 +1,48 @@
 package com.ferjuarez.simpleredditclient.utils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import android.content.Context;
+import com.ferjuarez.simpleredditclient.R;
 
 /**
  * Created by ferjuarez on 3/18/17.
  */
 
 public class Util {
+    private static final int SECOND_MILLIS = 1000;
+    private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
+    private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
+    private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
-    public static String getTimeAgo(long time){
-        try {
-            String timeParsed = epoch2DateString(time, "yyyy-mm-dd hh:mm:ss");
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-            Date past = format.parse(timeParsed);
-            Date now = new Date();
 
-            System.out.println(TimeUnit.MILLISECONDS.toMillis(now.getTime() - past.getTime()) + " milliseconds ago");
-            System.out.println(TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime()) + " minutes ago");
-            System.out.println(TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime()) + " hours ago");
-            System.out.println(TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) + " days ago");
+    public static String getTimeAgo(long time, Context context) {
+        if (time < 1000000000000L) {
+            // if timestamp given in seconds, conqvert to millis
+            time *= 1000;
         }
-        catch (Exception j){
-            j.printStackTrace();
+
+        long now = System.currentTimeMillis();
+        if (time > now || time <= 0) {
+            return null;
         }
-        return "";
+
+        final long diff = now - time;
+        if (diff < MINUTE_MILLIS) {
+            return context.getString(R.string.just_now);
+        } else if (diff < 2 * MINUTE_MILLIS) {
+            return context.getString(R.string.minute_ago);
+        } else if (diff < 50 * MINUTE_MILLIS) {
+            return diff / MINUTE_MILLIS + " " + context.getString(R.string.minutes_ago);
+        } else if (diff < 90 * MINUTE_MILLIS) {
+            return context.getString(R.string.hour_ago);
+        } else if (diff < 24 * HOUR_MILLIS) {
+            return diff / HOUR_MILLIS + " " + context.getString(R.string.hours_ago);
+        } else if (diff < 48 * HOUR_MILLIS) {
+            return context.getString(R.string.yesterday);
+        } else {
+            return diff / DAY_MILLIS + " " + context.getString(R.string.days_ago);
+        }
     }
 
-    public static String epoch2DateString(long epochSeconds, String formatString) {
-        Date updatedate = new Date(epochSeconds * 1000);
-        SimpleDateFormat format = new SimpleDateFormat(formatString);
-        return format.format(updatedate);
-    }
+
 
 }
