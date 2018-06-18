@@ -1,7 +1,8 @@
-package com.ferjuarez.simpleredditclient.presenters;
+package com.ferjuarez.simpleredditclient.ui.redditFeed;
 
 import com.ferjuarez.simpleredditclient.networking.RedditService;
 import com.ferjuarez.simpleredditclient.networking.RetrofitManager;
+import com.ferjuarez.simpleredditclient.ui.base.BasePresenter;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -11,21 +12,21 @@ import rx.schedulers.Schedulers;
  * Created by ferjuarez on 3/17/17.
  */
 
-public class RedditPresenter extends BasePresenter {
-    private static RedditPresenter mInstance = null;
+public class RedditFeedPresenter extends BasePresenter implements RedditFeedContract.Presenter  {
+    private static RedditFeedPresenter mInstance = null;
 
     private Subscription mRedditSubscription;
     private RedditService mRedditService;
 
     private static final int PAGE_SIZE = 10;
 
-    public RedditPresenter(){
+    public RedditFeedPresenter(){
         mRedditService = RetrofitManager.getInstance().getRedditService();
     }
 
-    public static RedditPresenter getInstance(){
+    public static RedditFeedPresenter getInstance(){
         if(mInstance == null){
-            return new RedditPresenter();
+            return new RedditFeedPresenter();
         } else return mInstance;
     }
 
@@ -39,7 +40,7 @@ public class RedditPresenter extends BasePresenter {
                         },
                         error -> {
                             if(error != null && error.getMessage() != null)
-                                getView().onConnectionError(new Throwable(error.getMessage()));
+                                getView().onError(new Throwable(error.getMessage()));
                         }
                 );
     }
@@ -54,7 +55,7 @@ public class RedditPresenter extends BasePresenter {
                         },
                         error -> {
                             if(error != null && error.getMessage() != null)
-                                getView().onConnectionError(new Throwable(error.getMessage()));
+                                getView().onError(new Throwable(error.getMessage()));
                         }
                 );
     }
@@ -64,7 +65,7 @@ public class RedditPresenter extends BasePresenter {
     }
 
     @Override
-    protected void cancelAllTasks() {
+    public void doDispose() {
         mRedditSubscription.unsubscribe();
     }
 }

@@ -1,4 +1,4 @@
-package com.ferjuarez.simpleredditclient.views;
+package com.ferjuarez.simpleredditclient.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,15 +12,18 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 /**
  * Created by ferjuarez on 3/15/17.
  */
-public abstract class BaseCompatActivity extends AppCompatActivity implements BaseView {
+public abstract class BaseCompatActivity extends AppCompatActivity {
 
     private SimpleDialog simpleDialog;
     private KProgressHUD waitingHud;
 
-    public void initToolBar(Toolbar toolbar, String title) {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(title);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    public void initToolBar(String title) {
+        Toolbar toolbar = getActivityToolbar();
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle(title);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     public void setTitle(String title) {
@@ -49,50 +52,11 @@ public abstract class BaseCompatActivity extends AppCompatActivity implements Ba
         simpleDialog.show();
     }
 
-    public void showInfoDialog(String message, DialogClickCallback callback) {
-        dismissDialog();
-        simpleDialog = new SimpleDialog(
-                this,
-                callback,
-                message
-        );
-        simpleDialog.show();
-    }
 
     @SuppressWarnings("unused")
     public void showErrorWithCallback(String message, DialogClickCallback callback) {
         dismissDialog();
         simpleDialog = new SimpleDialog(this, callback, () -> {}, message);
-        simpleDialog.show();
-    }
-
-
-    @SuppressWarnings("unused")
-    public void showErrorThenFinish(String message) {
-        dismissDialog();
-        simpleDialog = new SimpleDialog(
-                this,
-                () -> {
-                    simpleDialog.dismiss();
-                    finish();
-                },
-                () -> {},
-                message
-        );
-        simpleDialog.show();
-    }
-
-    @SuppressWarnings("unused")
-    public void showErrorThenBack(String message) {
-        dismissDialog();
-        simpleDialog = new SimpleDialog(
-                this,
-                () -> {
-                    simpleDialog.dismiss();
-                    onBackPressed();
-                },
-                () -> {},
-                message);
         simpleDialog.show();
     }
 

@@ -1,4 +1,4 @@
-package com.ferjuarez.simpleredditclient.views;
+package com.ferjuarez.simpleredditclient.ui.redditFeed;
 
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -12,14 +12,14 @@ import android.widget.TextView;
 import com.ferjuarez.simpleredditclient.R;
 import com.ferjuarez.simpleredditclient.models.RedditData;
 import com.ferjuarez.simpleredditclient.models.RedditElement;
-import com.ferjuarez.simpleredditclient.presenters.RedditPresenter;
+import com.ferjuarez.simpleredditclient.ui.base.BaseCompatActivity;
 import com.ferjuarez.simpleredditclient.ui.RedditPostAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseCompatActivity implements BaseView {
+public class MainActivity extends BaseCompatActivity implements RedditFeedContract.View {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -28,7 +28,7 @@ public class MainActivity extends BaseCompatActivity implements BaseView {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    private RedditPresenter mRedditPresenter;
+    private RedditFeedPresenter mRedditFeedPresenter;
     private LinearLayoutManager mLayoutManager;
 
     private boolean isLastPage = false;
@@ -47,10 +47,7 @@ public class MainActivity extends BaseCompatActivity implements BaseView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = getActivityToolbar();
-        if (toolbar != null) {
-            initToolBar(toolbar, getActivityTitle());
-        }
+        initToolBar(getActivityTitle());
 
         bindViews();
         initialize(savedInstanceState);
@@ -98,8 +95,8 @@ public class MainActivity extends BaseCompatActivity implements BaseView {
     @Override
     protected void bindViews() {
         ButterKnife.bind(this);
-        mRedditPresenter = RedditPresenter.getInstance();
-        mRedditPresenter.attachView(this);
+        mRedditFeedPresenter = RedditFeedPresenter.getInstance();
+        mRedditFeedPresenter.attachView(this);
     }
 
     @Override
@@ -120,7 +117,7 @@ public class MainActivity extends BaseCompatActivity implements BaseView {
 
         if(savedInstanceState == null){
             progressBar.setVisibility(View.VISIBLE);
-            mRedditPresenter.getTops();
+            mRedditFeedPresenter.getTops();
         }
 
     }
@@ -152,7 +149,17 @@ public class MainActivity extends BaseCompatActivity implements BaseView {
     }
 
     @Override
-    public void onConnectionError(Throwable error) {
+    public void showLoading(boolean visibility) {
+
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
+
+    @Override
+    public void onError(Throwable error) {
         showInfoDialog(error.getMessage());
         dismissWaitDialog();
         progressBar.setVisibility(View.INVISIBLE);
@@ -162,7 +169,7 @@ public class MainActivity extends BaseCompatActivity implements BaseView {
     private void loadMoreItems() {
         showWaitDialog(this, getString(R.string.title_loading_more));
         isLoading = true;
-        mRedditPresenter.getPaginatedTops(mNextPage);
+        mRedditFeedPresenter.getPaginatedTops(mNextPage);
     }
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -181,10 +188,15 @@ public class MainActivity extends BaseCompatActivity implements BaseView {
             if (!isLoading && !isLastPage) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0
-                        && totalItemCount >= mRedditPresenter.getPageSize()) {
+                        && totalItemCount >= mRedditFeedPresenter.getPageSize()) {
                     loadMoreItems();
                 }
             }
         }
     };
+
+    @Override
+    public void showDetail() {
+
+    }
 }
