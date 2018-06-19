@@ -37,6 +37,8 @@ public class RedditPost implements Parcelable {
     @SerializedName("preview")
     private RedditPreview preview;
 
+    private boolean isReaded;
+
     public RedditPost() {
         // Empty constructor for gson
     }
@@ -51,6 +53,7 @@ public class RedditPost implements Parcelable {
         subreddit = in.readString();
         thumbnail = in.readString();
         preview = in.readParcelable(RedditPreview.class.getClassLoader());
+        isReaded = in.readByte() != 0;
     }
 
     @Override
@@ -64,6 +67,7 @@ public class RedditPost implements Parcelable {
         dest.writeString(subreddit);
         dest.writeString(thumbnail);
         dest.writeParcelable(preview, flags);
+        dest.writeByte((byte) (isReaded ? 1 : 0));
     }
 
     @Override
@@ -117,5 +121,13 @@ public class RedditPost implements Parcelable {
 
     public RedditPreview getPreview() {
         return preview;
+    }
+
+    public boolean isReaded() {
+        return isReaded;
+    }
+
+    public void setReaded(boolean readed) {
+        isReaded = readed;
     }
 }

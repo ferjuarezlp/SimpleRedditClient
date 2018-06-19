@@ -7,8 +7,6 @@
     tools:context="com.ferjuarez.simpleredditclient.ui.redditFeed.MainActivity">
 
 
-
-
     <TextView
         android:id="@+id/textViewEmpty"
         android:layout_width="match_parent"

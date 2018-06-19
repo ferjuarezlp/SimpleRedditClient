@@ -5,15 +5,18 @@ import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.ferjuarez.simpleredditclient.R;
 import com.ferjuarez.simpleredditclient.models.RedditData;
 import com.ferjuarez.simpleredditclient.models.RedditElement;
+import com.ferjuarez.simpleredditclient.ui.adapters.SimpleItemTouchHelperCallback;
 import com.ferjuarez.simpleredditclient.ui.base.BaseCompatActivity;
-import com.ferjuarez.simpleredditclient.ui.RedditPostAdapter;
+import com.ferjuarez.simpleredditclient.ui.adapters.RedditPostAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -30,6 +33,7 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
 
     private RedditFeedPresenter mRedditFeedPresenter;
     private LinearLayoutManager mLayoutManager;
+    private ItemTouchHelper itemTouchHelper;
 
     private boolean isLastPage = false;
     private String mNextPage;
@@ -72,10 +76,31 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
             isLoading = state.getBoolean(IS_LOADING_KEY);
             isLastPage = state.getBoolean(IS_LAST_PAGE_KEY);
             List<RedditElement> items = state.getParcelableArrayList(ITEMS_KEY);
-            mRecyclerView.setAdapter(new RedditPostAdapter(items));
-            mRecyclerView.getAdapter().notifyDataSetChanged();
+            populateRedditList(items);
         }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case R.id.refresh:{
+                progressBar.setVisibility(View.VISIBLE);
+                textViewEmpty.setVisibility(View.INVISIBLE);
+                mRecyclerView.setVisibility(View.INVISIBLE);
+                ((RedditPostAdapter) mRecyclerView.getAdapter()).clear();
+                mRedditFeedPresenter.getTops();
+                return true;
+            }
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -112,6 +137,7 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
     @Override
     protected void initialize(Bundle savedInstanceState) {
         mLayoutManager = new LinearLayoutManager(this);
+
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addOnScrollListener(recyclerViewOnScrollListener);
 
@@ -137,16 +163,17 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
                 textViewEmpty.setVisibility(View.INVISIBLE);
                 if(mRecyclerView.getAdapter() == null){
                     progressBar.setVisibility(View.INVISIBLE);
-                    mRecyclerView.setAdapter(new RedditPostAdapter(redditElements));
+                    populateRedditList(redditElements);
+
                 } else {
                     ((RedditPostAdapter)mRecyclerView.getAdapter()).addElements(redditElements);
+                    mRecyclerView.setVisibility(View.VISIBLE);
                     mRecyclerView.getAdapter().notifyDataSetChanged();
                 }
             }
         }
         isLoading = false;
         showLoading(false);
-        //dismissWaitDialog();
     }
 
     @Override
@@ -167,8 +194,20 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
         textViewEmpty.setVisibility(View.VISIBLE);
     }
 
+    private void populateRedditList(List<RedditElement> redditElements){
+        RedditPostAdapter adapter = new RedditPostAdapter(redditElements, view -> {
+            progressBar.setVisibility(View.INVISIBLE);
+            textViewEmpty.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.INVISIBLE);
+            mRedditFeedPresenter.doDispose();
+        });
+        mRecyclerView.setAdapter(adapter);
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
+        itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+    }
+
     private void loadMoreItems() {
-        //showWaitDialog(this, getString(R.string.title_loading_more));
         showLoading(true);
         isLoading = true;
         mRedditFeedPresenter.getPaginatedTops(mNextPage);

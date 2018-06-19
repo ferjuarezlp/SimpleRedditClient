@@ -22,6 +22,7 @@
             android:id="@+id/thumbnail"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_margin="5dp"
             android:scaleType="centerCrop"/>
 
         <RelativeLayout
@@ -36,9 +37,17 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:layout_alignParentTop="true"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageViewReaded"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                app:srcCompat="@drawable/eye_gray" />
 
             <TextView
                 android:id="@+id/author"
