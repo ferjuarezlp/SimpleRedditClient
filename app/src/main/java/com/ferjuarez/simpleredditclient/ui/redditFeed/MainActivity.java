@@ -145,12 +145,14 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
             }
         }
         isLoading = false;
-        dismissWaitDialog();
+        showLoading(false);
+        //dismissWaitDialog();
     }
 
     @Override
     public void showLoading(boolean visibility) {
-
+        if(visibility) progressBar.setVisibility(View.VISIBLE);
+        else progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -161,13 +163,13 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
     @Override
     public void onError(Throwable error) {
         showInfoDialog(error.getMessage());
-        dismissWaitDialog();
-        progressBar.setVisibility(View.INVISIBLE);
+        showLoading(false);
         textViewEmpty.setVisibility(View.VISIBLE);
     }
 
     private void loadMoreItems() {
-        showWaitDialog(this, getString(R.string.title_loading_more));
+        //showWaitDialog(this, getString(R.string.title_loading_more));
+        showLoading(true);
         isLoading = true;
         mRedditFeedPresenter.getPaginatedTops(mNextPage);
     }

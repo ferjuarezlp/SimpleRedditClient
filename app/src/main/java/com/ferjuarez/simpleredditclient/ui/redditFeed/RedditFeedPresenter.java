@@ -3,7 +3,6 @@ package com.ferjuarez.simpleredditclient.ui.redditFeed;
 import com.ferjuarez.simpleredditclient.networking.RedditService;
 import com.ferjuarez.simpleredditclient.networking.RetrofitManager;
 import com.ferjuarez.simpleredditclient.ui.base.BasePresenter;
-
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
