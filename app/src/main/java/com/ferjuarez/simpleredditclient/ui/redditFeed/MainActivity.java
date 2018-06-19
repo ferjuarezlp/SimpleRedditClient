@@ -33,7 +33,6 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
 
     private RedditFeedPresenter mRedditFeedPresenter;
     private LinearLayoutManager mLayoutManager;
-    private ItemTouchHelper itemTouchHelper;
 
     private boolean isLastPage = false;
     private String mNextPage;
@@ -65,7 +64,7 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
         state.putBoolean(IS_LOADING_KEY, isLoading);
         state.putBoolean(IS_LAST_PAGE_KEY, isLastPage);
         if(mRecyclerView.getAdapter() != null)
-            state.putParcelableArrayList(ITEMS_KEY, new ArrayList<RedditElement>(((RedditPostAdapter)mRecyclerView.getAdapter()).getItems()));
+            state.putParcelableArrayList(ITEMS_KEY, new ArrayList<>(((RedditPostAdapter) mRecyclerView.getAdapter()).getItems()));
     }
 
     protected void onRestoreInstanceState(Bundle state) {
@@ -203,7 +202,7 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
         });
         mRecyclerView.setAdapter(adapter);
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
-        itemTouchHelper = new ItemTouchHelper(callback);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 

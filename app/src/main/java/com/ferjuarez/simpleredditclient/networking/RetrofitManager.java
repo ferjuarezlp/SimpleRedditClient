@@ -13,8 +13,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitManager {
 
-    public static String BASE_URL = "https://www.reddit.com";
-
     private static RetrofitManager mInstance = null;
     private Retrofit mRetrofit;
 
@@ -37,16 +35,13 @@ public class RetrofitManager {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
 
+        String BASE_URL = "https://www.reddit.com";
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(httpClient.build())
                 .build();
-    }
-
-    public Retrofit getRetrofit(){
-        return mRetrofit;
     }
 
     public RedditService getRedditService() {

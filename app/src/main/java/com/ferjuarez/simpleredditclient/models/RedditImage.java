@@ -16,11 +16,7 @@ public class RedditImage implements Parcelable {
     @SerializedName("id")
     private String id;
 
-    public RedditImage() {
-        // Empty constructor for gson
-    }
-
-    protected RedditImage(Parcel in) {
+    private RedditImage(Parcel in) {
         id = in.readString();
     }
 

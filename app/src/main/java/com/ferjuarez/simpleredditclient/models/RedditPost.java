@@ -43,7 +43,7 @@ public class RedditPost implements Parcelable {
         // Empty constructor for gson
     }
 
-    protected RedditPost(Parcel in) {
+    private RedditPost(Parcel in) {
         author = in.readString();
         title = in.readString();
         created = in.readLong();

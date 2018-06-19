@@ -22,7 +22,6 @@ public abstract class BaseCompatActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(title);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
-
         }
     }
 

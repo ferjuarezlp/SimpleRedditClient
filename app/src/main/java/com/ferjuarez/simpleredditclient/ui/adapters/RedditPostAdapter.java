@@ -3,8 +3,8 @@ package com.ferjuarez.simpleredditclient.ui.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,6 @@ import com.ferjuarez.simpleredditclient.models.RedditElement;
 import com.ferjuarez.simpleredditclient.models.RedditPost;
 import com.ferjuarez.simpleredditclient.ui.CircleTransform;
 import com.ferjuarez.simpleredditclient.utils.Util;
-
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +53,7 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
             ViewHolder viewHolder = new ViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate( R.layout.reddit_post_item, parent, false));
@@ -62,16 +61,15 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mContext = parent.getContext();
             return viewHolder;
         } else if(viewType == TYPE_FOOTER){
-            FooterViewHolder footerHolder = new FooterViewHolder(LayoutInflater.from(parent.getContext())
+            return new FooterViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate( R.layout.reddit_list_footer, parent, false));
-            return footerHolder;
         }
 
         return null;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
             ((ViewHolder) holder).bindTo(mRedditElements.get(position).getData());
         } else if(holder instanceof FooterViewHolder){
@@ -116,9 +114,7 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.imageViewReaded)
         ImageView imageViewReaded;
 
-        private RedditPost redditPost;
-
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -129,8 +125,7 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         }
 
-        public void bindTo(RedditPost redditPost) {
-            this.redditPost = redditPost;
+        void bindTo(RedditPost redditPost) {
             setImage(redditPost.getThumbnail());
             title.setText(redditPost.getTitle());
             String time = Util.getTimeAgo(redditPost.getCreatedUtc(), mContext);
@@ -169,12 +164,12 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.buttonFooter)
         Button buttonFooter;
 
-        public FooterViewHolder(View itemView) {
+        FooterViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void setOnClickListener(View.OnClickListener listener){
+        void setOnClickListener(View.OnClickListener listener){
             buttonFooter.setOnClickListener(listener);
         }
     }

@@ -19,7 +19,7 @@ public class RedditFeedPresenter extends BasePresenter implements RedditFeedCont
 
     private static final int PAGE_SIZE = 10;
 
-    public RedditFeedPresenter(){
+    private RedditFeedPresenter(){
         mRedditService = RetrofitManager.getInstance().getRedditService();
     }
 
@@ -34,9 +34,7 @@ public class RedditFeedPresenter extends BasePresenter implements RedditFeedCont
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        tops -> {
-                            getView().onSuccess(tops.getData());
-                        },
+                        tops -> getView().onSuccess(tops.getData()),
                         error -> {
                             if(error != null && error.getMessage() != null)
                                 getView().onError(new Throwable(error.getMessage()));
@@ -49,9 +47,7 @@ public class RedditFeedPresenter extends BasePresenter implements RedditFeedCont
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        tops -> {
-                            getView().onSuccess(tops.getData());
-                        },
+                        tops -> getView().onSuccess(tops.getData()),
                         error -> {
                             if(error != null && error.getMessage() != null)
                                 getView().onError(new Throwable(error.getMessage()));

@@ -17,11 +17,7 @@ public class RedditPreview implements Parcelable{
     @SerializedName("images")
     private List<RedditImage> images;
 
-    public RedditPreview() {
-        // Empty constructor for gson
-    }
-
-    protected RedditPreview(Parcel in) {
+    private RedditPreview(Parcel in) {
         enabled = in.readByte() != 0;
         images = in.createTypedArrayList(RedditImage.CREATOR);
     }
