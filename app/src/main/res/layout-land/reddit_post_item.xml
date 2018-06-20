@@ -34,7 +34,7 @@
             android:orientation="vertical"
             android:layout_marginStart="5dp">
 
-            <TextView
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +42,8 @@
                 android:layout_alignParentTop="true"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
-                android:layout_marginEnd="20dp" />
+                android:layout_marginEnd="20dp"
+                app:use_gradient="true"/>
 
             <ImageView
                 android:id="@+id/imageViewReaded"
@@ -53,16 +54,17 @@
                 android:layout_alignParentEnd="true"
                 tools:ignore="ContentDescription" />
 
-            <TextView
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="11sp"
                 android:gravity="left"
                 android:layout_above="@+id/textViewCommentsCount"
-                tools:ignore="SmallSp" />
+                tools:ignore="SmallSp"
+                app:use_gradient="true"/>
 
-            <TextView
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/textViewCommentsCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,9 +72,10 @@
                 android:layout_marginBottom="8dp"
                 android:layout_above="@+id/textSubreddit"
                 android:textColor="@color/colorAccent"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                app:use_gradient="true"/>
 
-            <TextView
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/textSubreddit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,7 +84,8 @@
                 android:textSize="10sp"
                 android:textColor="@color/colorAccentTransparent"
                 android:textStyle="bold"
-                tools:ignore="SmallSp" />
+                tools:ignore="SmallSp"
+                app:use_gradient="true"/>
 
         </RelativeLayout>
 

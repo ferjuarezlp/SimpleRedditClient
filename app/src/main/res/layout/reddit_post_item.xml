@@ -35,7 +35,8 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp">
 
-            <TextView
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +46,8 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                app:use_gradient="true"/>
 
             <ImageView
                 android:id="@+id/imageViewReaded"
@@ -56,24 +58,26 @@
                 app:srcCompat="@drawable/eye_gray"
                 tools:ignore="ContentDescription" />
 
-            <TextView
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
                 android:layout_centerVertical="true"
                 android:textSize="11sp"
-                tools:ignore="SmallSp" />
+                tools:ignore="SmallSp"
+                app:use_gradient="true"/>
 
-            <TextView
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/textViewCommentsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/author"
                 android:textColor="@color/colorAccent"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                app:use_gradient="true"/>
 
-            <TextView
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/textSubreddit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,7 +88,8 @@
                 android:textSize="10sp"
                 android:textStyle="bold"
                 tools:text=""
-                tools:ignore="SmallSp" />
+                tools:ignore="SmallSp"
+                app:use_gradient="true"/>
 
         </RelativeLayout>
 

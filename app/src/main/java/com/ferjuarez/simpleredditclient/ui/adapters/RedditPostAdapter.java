@@ -1,8 +1,6 @@
 package com.ferjuarez.simpleredditclient.ui.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,23 +18,19 @@ import com.ferjuarez.simpleredditclient.utils.Util;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-/**
- * Created by Juan on 30/8/16.
- */
 public class RedditPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
 
     private Context mContext;
     private List<RedditElement> mRedditElements;
-    private View.OnClickListener mOnClickListener;
+    private RedditAdapterListener mRedditListener;
 
     private static final int TYPE_FOOTER = 0;
     private static final int TYPE_ITEM = 1;
 
-    public RedditPostAdapter(List<RedditElement> redditElements, View.OnClickListener onClickListener) {
+    public RedditPostAdapter(List<RedditElement> redditElements, RedditAdapterListener mRedditListener) {
         this.mRedditElements = redditElements;
-        this.mOnClickListener = onClickListener;
+        this.mRedditListener = mRedditListener;
     }
 
     public void addElements(List<RedditElement> redditElements) {
@@ -75,7 +69,7 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else if(holder instanceof FooterViewHolder){
             ((FooterViewHolder) holder).setOnClickListener(view -> {
                 clear();
-                mOnClickListener.onClick(view);
+                mRedditListener.onDismissAll();
             });
         }
     }
@@ -119,12 +113,6 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ButterKnife.bind(this, itemView);
         }
 
-        @SuppressWarnings("unused")
-        @OnClick(R.id.card)
-        public void onCardClick(View view) {
-
-        }
-
         void bindTo(RedditPost redditPost) {
             setImage(redditPost.getThumbnail());
             title.setText(redditPost.getTitle());
@@ -137,15 +125,20 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } else {
                 imageViewReaded.setImageResource(R.drawable.eye_gray);
             }
+
+            itemView.setOnClickListener(view -> {
+                mRedditListener.onItemSelection(redditPost);
+                redditPost.setReaded(true);
+                notifyItemChanged(getAdapterPosition());
+            });
+
             thumbnail.setOnClickListener(view -> {
                 if(redditPost.getPreview() != null){
                     String url = redditPost.getThumbnail();
                     if(redditPost.getPreview().getImages().size() > 0){
                         url = redditPost.getPreview().getImages().get(0).getSource().getUrl().replace("&amp;","&");
                     }
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(url));
-                    mContext.startActivity(i);
+                    mRedditListener.onThumbnailSelection(url);
                 }
             });
         }
@@ -153,7 +146,6 @@ public class RedditPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         private void setImage(String url) {
             Glide.with(thumbnail.getContext())
                     .load(url)
-                    //.centerCrop()
                     .crossFade()
                     .transform(new CircleTransform(thumbnail.getContext()))
                     .into(thumbnail);

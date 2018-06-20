@@ -25,6 +25,29 @@ public abstract class BaseCompatActivity extends AppCompatActivity {
         }
     }
 
+    public void initToolBar() {
+        Toolbar toolbar = getActivityToolbar();
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            if(getSupportActionBar() != null){
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+        }
+    }
+
+    public void enableBackInToolbar(){
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+    }
+
+    public void setToolbarTitle(String title){
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setTitle(title);
+        }
+    }
+
     public void setTitle(String title) {
         if(getSupportActionBar() != null)
         getSupportActionBar().setTitle(title);

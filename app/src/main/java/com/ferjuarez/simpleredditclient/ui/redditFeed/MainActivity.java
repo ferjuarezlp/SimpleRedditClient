@@ -1,5 +1,7 @@
 package com.ferjuarez.simpleredditclient.ui.redditFeed;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,9 +16,12 @@ import android.widget.TextView;
 import com.ferjuarez.simpleredditclient.R;
 import com.ferjuarez.simpleredditclient.models.RedditData;
 import com.ferjuarez.simpleredditclient.models.RedditElement;
+import com.ferjuarez.simpleredditclient.models.RedditPost;
+import com.ferjuarez.simpleredditclient.ui.adapters.RedditAdapterListener;
 import com.ferjuarez.simpleredditclient.ui.adapters.SimpleItemTouchHelperCallback;
 import com.ferjuarez.simpleredditclient.ui.base.BaseCompatActivity;
 import com.ferjuarez.simpleredditclient.ui.adapters.RedditPostAdapter;
+import com.ferjuarez.simpleredditclient.ui.redditDetail.RedditPostDetail;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -44,6 +49,7 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
     private String IS_LOADING_KEY = "is_loading_key";
     private String IS_LAST_PAGE_KEY = "is_last_page_key";
     private String ITEMS_KEY = "items_key";
+    private String POST_KEY = "post_key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,11 +200,24 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
     }
 
     private void populateRedditList(List<RedditElement> redditElements){
-        RedditPostAdapter adapter = new RedditPostAdapter(redditElements, view -> {
-            progressBar.setVisibility(View.INVISIBLE);
-            textViewEmpty.setVisibility(View.VISIBLE);
-            mRecyclerView.setVisibility(View.INVISIBLE);
-            mRedditFeedPresenter.doDispose();
+        RedditPostAdapter adapter = new RedditPostAdapter(redditElements, new RedditAdapterListener() {
+            @Override
+            public void onDismissAll() {
+                progressBar.setVisibility(View.INVISIBLE);
+                textViewEmpty.setVisibility(View.VISIBLE);
+                mRecyclerView.setVisibility(View.INVISIBLE);
+                mRedditFeedPresenter.doDispose();
+            }
+
+            @Override
+            public void onThumbnailSelection(String url) {
+                showThumbnail(url);
+            }
+
+            @Override
+            public void onItemSelection(RedditPost redditPost) {
+                showDetail(redditPost);
+            }
         });
         mRecyclerView.setAdapter(adapter);
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
@@ -236,7 +255,16 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
     };
 
     @Override
-    public void showDetail() {
+    public void showDetail(RedditPost redditPost) {
+        Intent i = new Intent(MainActivity.this, RedditPostDetail.class);
+        i.putExtra(POST_KEY, redditPost);
+        startActivity(i);
+    }
 
+    @Override
+    public void showThumbnail(String url) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 }
