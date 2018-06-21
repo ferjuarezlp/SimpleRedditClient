@@ -149,8 +149,9 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
         if(savedInstanceState == null){
             progressBar.setVisibility(View.VISIBLE);
             mRedditFeedPresenter.getTops();
+        } else {
+            progressBar.setVisibility(View.INVISIBLE);
         }
-
     }
 
     @Override
@@ -169,11 +170,8 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
                 if(mRecyclerView.getAdapter() == null){
                     progressBar.setVisibility(View.INVISIBLE);
                     populateRedditList(redditElements);
-
                 } else {
-                    ((RedditPostAdapter)mRecyclerView.getAdapter()).addElements(redditElements);
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    mRecyclerView.getAdapter().notifyDataSetChanged();
+                    addMoreItems(redditElements);
                 }
             }
         }
@@ -189,14 +187,15 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
 
     @Override
     public void showError(String error) {
-
+        showInfoDialog(error);
+        showLoading(false);
+        textViewEmpty.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onError(Throwable error) {
-        showInfoDialog(error.getMessage());
-        showLoading(false);
-        textViewEmpty.setVisibility(View.VISIBLE);
+        showError(error.getMessage());
     }
 
     private void populateRedditList(List<RedditElement> redditElements){
@@ -223,6 +222,12 @@ public class MainActivity extends BaseCompatActivity implements RedditFeedContra
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
+    }
+
+    private void addMoreItems(List<RedditElement> redditElements){
+        ((RedditPostAdapter)mRecyclerView.getAdapter()).addElements(redditElements);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
     private void loadMoreItems() {

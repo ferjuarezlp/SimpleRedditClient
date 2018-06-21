@@ -91,6 +91,12 @@ public abstract class BaseCompatActivity extends AppCompatActivity {
         simpleDialog = null;
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     protected abstract void bindViews();
     protected abstract Toolbar getActivityToolbar();
     protected abstract String getActivityTitle();

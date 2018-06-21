@@ -27,30 +27,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_margin="4dp"
+            android:orientation="horizontal"
             android:weightSum="1">
 
             <ImageView
                 android:id="@+id/thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="5dp"
                 android:scaleType="centerCrop"
                 tools:ignore="ContentDescription" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:orientation="vertical">
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp">
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/textViewCommentsCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:gravity="end"
-                    android:textSize="16sp"
-                    app:use_gradient="true" />
 
                 <com.elyeproj.loaderviewlibrary.LoaderTextView
                     android:id="@+id/title"
@@ -65,10 +63,20 @@
                     android:id="@+id/author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/title"
                     android:layout_centerVertical="true"
                     android:textSize="18sp"
                     app:use_gradient="true"
                     tools:ignore="SmallSp" />
+
+                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                    android:id="@+id/textViewCommentsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/author"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp"
+                    app:use_gradient="true" />
 
                 <com.elyeproj.loaderviewlibrary.LoaderTextView
                     android:id="@+id/textSubreddit"
@@ -83,11 +91,11 @@
                     app:use_gradient="true"
                     tools:ignore="SmallSp"
                     tools:text="" />
-            </LinearLayout>
+
+            </RelativeLayout>
 
 
         </LinearLayout>
-
     </android.support.v7.widget.CardView>
 
 </android.support.constraint.ConstraintLayout>

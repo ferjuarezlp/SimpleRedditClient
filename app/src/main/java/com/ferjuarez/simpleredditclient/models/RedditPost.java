@@ -10,6 +10,9 @@ import com.google.gson.annotations.SerializedName;
 @SuppressWarnings("unused")
 public class RedditPost implements Parcelable {
 
+    @SerializedName("id")
+    private String id;
+
     @SerializedName("author")
     private String author;
 
@@ -38,12 +41,14 @@ public class RedditPost implements Parcelable {
     private RedditPreview preview;
 
     private boolean isReaded;
+    private static final String DEFAULT_THUMBNAIL = "default";
 
     public RedditPost() {
         // Empty constructor for gson
     }
 
     private RedditPost(Parcel in) {
+        id = in.readString();
         author = in.readString();
         title = in.readString();
         created = in.readLong();
@@ -58,6 +63,7 @@ public class RedditPost implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(author);
         dest.writeString(title);
         dest.writeLong(created);
@@ -86,6 +92,14 @@ public class RedditPost implements Parcelable {
             return new RedditPost[size];
         }
     };
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getAuthor() {
         return author;
@@ -116,6 +130,10 @@ public class RedditPost implements Parcelable {
     }
 
     public String getThumbnail() {
+        if(thumbnail.equals(DEFAULT_THUMBNAIL)){
+            if(preview!= null && !preview.getImages().isEmpty() && preview.getImages().get(0).getSource() != null)
+                thumbnail = preview.getImages().get(0).getSource().getUrl();
+        }
         return thumbnail;
     }
 
@@ -130,4 +148,5 @@ public class RedditPost implements Parcelable {
     public void setReaded(boolean readed) {
         isReaded = readed;
     }
+
 }

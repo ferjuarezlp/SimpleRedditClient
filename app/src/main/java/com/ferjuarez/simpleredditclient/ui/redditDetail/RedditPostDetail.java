@@ -1,12 +1,15 @@
 package com.ferjuarez.simpleredditclient.ui.redditDetail;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.ferjuarez.simpleredditclient.R;
@@ -93,12 +96,15 @@ public class RedditPostDetail extends BaseCompatActivity {
         author.setText(getString(R.string.label_author_time, post.getAuthor(), time));
         textViewCommentsCount.setText(getString(R.string.label_comments, post.getNumComments()));
         textSubreddit.setText(getString(R.string.label_posted) + post.getSubreddit());
-        setImage(post.getThumbnail());
+        String url = post.getThumbnail();
+        setImage(url);
+        thumbnail.setVisibility(View.VISIBLE);
     }
 
     private void setImage(String url) {
         Glide.with(thumbnail.getContext())
                 .load(url)
+                .fitCenter()
                 .crossFade()
                 .placeholder(R.drawable.placeholder)
                 .into(thumbnail);
